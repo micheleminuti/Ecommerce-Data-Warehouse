@@ -1,0 +1,28 @@
+name: 'dwh_ecommerce'
+version: '1.0.0'
+profile: 'dwh_ecommerce'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+clean-targets:
+  - "target"
+  - "dbt_packages"
+
+models:
+  dwh_ecommerce:
+    +materialized: table
+
+    ods:
+      +schema: ods
+
+    marts:
+      +schema: marts
+
+seeds:
+  dwh_ecommerce:
+    +schema: staging

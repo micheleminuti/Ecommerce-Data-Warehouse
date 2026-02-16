@@ -1,0 +1,11 @@
+target/
+dbt_packages/
+logs/
+dbt_modules/
+__pycache__/
+*.duckdb  
+.dbtenv
+.DS_Store
+
+seeds/*
+!seeds/.gitkeep
