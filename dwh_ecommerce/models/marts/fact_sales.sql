@@ -2,7 +2,7 @@
     materialized='incremental',
     schema='marts',
     unique_key=['sk_customer', 'sk_date', 'sk_time', 'sk_device', 'sk_promo', 'sk_payment', 'sk_shipment_date_limit', 'sk_product'],
-    incremental_strategy='merge'
+    incremental_strategy='delete+insert'
 )}}
 
 
@@ -16,9 +16,7 @@ with transaction_base as (
         
     from {{ ref('transaction_ods') }}
     where is_payment_success = true
-      {% if is_incremental() %}
-        and created_at >= dateadd(day, -7, current_timestamp())
-      {% endif %}
+
 ),
 
 
@@ -52,7 +50,14 @@ enriched_transactions as (
 )
 
 select 
-    sk_customer, sk_date, sk_time, sk_device, sk_promo, sk_payment, sk_shipment_date_limit, sk_product,
+    sk_customer as fk_customer, 
+    sk_date as fk_date, 
+    sk_time as fk_time, 
+    sk_device as fk_device, 
+    sk_promo as fk_promo, 
+    sk_payment as fk_payment, 
+    sk_shipment_date_limit as fk_shipment_date_limit, 
+    sk_product as fk_product,
     
     count(*) as order_count,
     sum(quantity) as quantity,

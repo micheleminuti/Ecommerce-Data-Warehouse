@@ -9,3 +9,5 @@ __pycache__/
 
 seeds/*
 !seeds/.gitkeep
+
+export_tableau_csv/
