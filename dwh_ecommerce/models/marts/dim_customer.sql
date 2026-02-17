@@ -12,8 +12,6 @@ with raw_customers as (
         email,
         gender,
         birth_date,
-        device_type,
-        device_version,
         home_location,
         home_country,
         first_join_date
@@ -25,8 +23,7 @@ enriched as (
         c.*,
         l.sk_location,
         jd.date_sk as sk_join_date,
-        bd.date_sk as sk_birth_date,
-        dv.sk_device
+        bd.date_sk as sk_birth_date
     from raw_customers c
 
     left join {{ ref('dim_location') }} l 
@@ -37,9 +34,6 @@ enriched as (
 
     left join {{ ref('dim_date') }} bd on bd.date_day = c.birth_date
 
-    left join {{ ref('dim_device') }} dv 
-        on dv.device_type = c.device_type 
-        and dv.device_version = c.device_version  
 )
 
 
@@ -54,6 +48,5 @@ select
     gender,
     sk_location,
     sk_birth_date,
-    sk_join_date,
-    sk_device
+    sk_join_date
 from enriched
