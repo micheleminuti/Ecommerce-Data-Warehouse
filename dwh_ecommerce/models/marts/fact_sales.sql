@@ -59,7 +59,9 @@ enriched_transactions as (
         
     from transaction_base tb
     
-    left join {{ ref('dim_customer') }} dc using (customer_id)
+    left join {{ ref('dim_customer') }} dc 
+        ON dc.customer_id = tb.customer_id
+        AND cast(tb.created_at as date) BETWEEN dc.dbt_valid_from AND dc.valid_to  
 
     left join {{ ref('dim_date') }} dd_date on dd_date.date_day = cast(tb.created_at as date)
 
