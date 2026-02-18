@@ -73,7 +73,7 @@ WITH snapshot_data AS (
 )
 
 SELECT 
-  {{ dbt_utils.generate_surrogate_key(['customer_id', 'dbt_valid_from']) }} AS sk_customer,
+  {{ dbt_utils.generate_surrogate_key(['customer_id', 'dbt_valid_from']) }} AS sk_customer,  
   customer_id,
   first_name, 
   last_name, 
@@ -83,7 +83,7 @@ SELECT
   sk_location, 
   sk_birth_date, 
   sk_join_date,
-  dbt_valid_from,
-  COALESCE(dbt_valid_to, '9999-12-31'::DATE) AS valid_to,
-  dbt_valid_to IS NULL AS is_current
-FROM snapshot_data
+  s.dbt_valid_from,
+  COALESCE(s.dbt_valid_to, '9999-12-31'::DATE) AS valid_to, 
+  s.dbt_valid_to IS NULL AS is_current
+FROM snapshot_data s
