@@ -61,7 +61,7 @@ enriched_transactions as (
     
     left join {{ ref('dim_customer') }} dc 
         ON dc.customer_id = tb.customer_id
-        AND dc.is_current = true
+        AND dc.is_current = true 
 
     left join {{ ref('dim_date') }} dd_date on dd_date.date_day = cast(tb.created_at as date)
 
@@ -91,15 +91,13 @@ select
     sk_payment as fk_payment, 
     sk_shipment_date_limit as fk_shipment_date_limit, 
     sk_product as fk_product,
-
-    sum(quantity) as quantity,
-    sum(total_amount_eur) as total_amount_eur,
-    sum(shipment_fee_eur) as shipment_fee_eur,
-    sum(promo_amount_eur) as promo_amount_eur,
-    sum(total_amount_idr) as total_amount_idr,
-    sum(shipment_fee_idr) as shipment_fee_idr,
-    sum(promo_amount_idr) as promo_amount_idr
     
- 
+    quantity,
+    total_amount_eur,
+    shipment_fee_eur,
+    promo_amount_eur,
+    total_amount_idr,
+    shipment_fee_idr,
+    promo_amount_idr
+
 from enriched_transactions
-group by 1,2,3,4,5,6,7,8
