@@ -12,7 +12,7 @@ pre_cleaned as (
         -- Gestione Timestamps (Separazione Data e Ora)
         created_at::timestamp as created_at,
         shipment_date_limit::timestamp as shipment_date_limit,
-        
+
         customer_id::bigint as customer_id,
         booking_id as booking_id,
         

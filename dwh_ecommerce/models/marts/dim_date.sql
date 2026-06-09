@@ -7,7 +7,7 @@ with date_spine as (
     select
         range as datetime_hour
     from range(
-        TIMESTAMP '2015-01-01 00:00:00',
+        TIMESTAMP '1950-01-01 00:00:00',
         TIMESTAMP '2025-01-01 00:00:00',
         INTERVAL 1 HOUR
     )

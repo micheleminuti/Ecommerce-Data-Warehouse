@@ -60,7 +60,7 @@ enriched_transactions as (
         ON dc.customer_id = tb.customer_id
         AND dc.is_current = true 
 
-    left join {{ ref('dim_date') }} dd_date on dd_date.date_day = cast(tb.created_at as date)
+    left join {{ ref('dim_date') }} dd_date on date_trunc('hour', tb.created_at) = dd_date.date_day
 
     left join {{ ref('dim_promo') }} dp using (promo_code)
 
@@ -68,7 +68,7 @@ enriched_transactions as (
 
     left join {{ ref('dim_payment') }} dpay using (payment_method, is_payment_success)
 
-    left join {{ ref('dim_date') }} dd_shipment on dd_shipment.date_day = cast(tb.shipment_date_limit as date)
+    left join {{ ref('dim_date') }} dd_shipment on date_trunc('hour', tb.shipment_date_limit) = dd_shipment.date_day 
 
     left join {{ ref('dim_device') }}   ddev
            on  ddev.device_type   = tb.device_type
