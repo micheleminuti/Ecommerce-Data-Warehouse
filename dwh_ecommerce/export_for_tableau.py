@@ -10,11 +10,9 @@ tables = [
     'main_marts.dim_customer',
     'main_marts.dim_date',
     'main_marts.dim_device',
-    'main_marts.dim_location',
     'main_marts.dim_payment',
     'main_marts.dim_product',
     'main_marts.dim_promo',
-    'main_marts.dim_time',
     'main_marts.fact_sales' 
 ]
 

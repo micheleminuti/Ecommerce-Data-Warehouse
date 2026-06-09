@@ -18,8 +18,8 @@ SELECT
   trim(lower(email)) as email,
   upper(gender) as gender,
   birthdate::date as birth_date,
-  trim(upper(home_location)) as home_location,
-  trim(upper(home_country)) as home_country,
+  trim(home_location) as home_location,
+  trim(home_country) as home_country,
   first_join_date::date as first_join_date,
 FROM {{ ref('customers') }}
 WHERE customer_id IS NOT NULL 

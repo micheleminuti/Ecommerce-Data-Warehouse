@@ -19,8 +19,8 @@ cleaned as (
         birthdate::date as birth_date,  
         device_type,
         device_version,
-        trim(upper(home_location)) as home_location,
-        trim(upper(home_country)) as home_country,
+        trim(home_location) as home_location,
+        trim(home_country) as home_country,
         first_join_date::date as first_join_date
     from source
     where customer_id is not null
