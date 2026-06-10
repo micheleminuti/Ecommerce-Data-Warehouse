@@ -10,6 +10,20 @@
 
 
 
+{% if is_incremental() %}
+
+  {% set max_date_query %}
+    SELECT MAX(fk_date) FROM {{ this }}
+  {% endset %}
+
+  {% set max_date = run_query(max_date_query).columns[0][0] %}
+
+{% endif %}
+
+
+
+
+
 
 with transaction_base as (
     select
@@ -93,4 +107,8 @@ select
     shipment_fee_idr,
     promo_amount_idr
 
-from enriched_transactions
+from enriched_transactions 
+
+    {% if is_incremental() %}
+      where fk_date > '{{ max_date }}'
+    {% endif %}
