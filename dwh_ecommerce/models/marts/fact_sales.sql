@@ -4,7 +4,7 @@
 {{ config(
     materialized='incremental',
     schema='marts',
-    unique_key=['fk_customer', 'fk_date', 'fk_device', 'fk_promo', 'fk_payment', 'fk_shipment_date_limit', 'fk_product'],
+    unique_key=['booking_id', 'fk_product'],
     incremental_strategy='delete+insert'
 )}}
 
@@ -48,7 +48,7 @@ with transaction_base as (
         c.device_version as device_version
         
     from {{ ref('transaction_ods') }} t
-    left join {{ ref('customer_ods') }} c using (customer_id)  -- ✅ Join su customer_id
+    left join {{ ref('customer_ods') }} c using (customer_id)  -- Join su customer_id
     where t.is_payment_success = true
 ),
 
@@ -66,7 +66,7 @@ enriched_transactions as (
         dproduct.sk_product,
         dpay.sk_payment,
         dd_shipment.sk_date as sk_shipment_date_limit,
-        ddev.sk_device  -- Già nel dim_customer!
+        ddev.sk_device  
         
     from transaction_base tb
     
@@ -91,6 +91,7 @@ enriched_transactions as (
 
 
 select 
+    booking_id,
     sk_customer as fk_customer, 
     sk_date as fk_date, 
     sk_device as fk_device, 

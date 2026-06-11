@@ -23,6 +23,4 @@ SELECT
   first_join_date
 FROM {{ ref('customer_ods') }}
 
-
-
 {% endsnapshot %}

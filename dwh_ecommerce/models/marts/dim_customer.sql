@@ -1,5 +1,3 @@
-
-
 {{ config(materialized='table', schema='marts') }}
 
 WITH snapshot_data AS (
@@ -22,8 +20,8 @@ SELECT
   gender,
   home_location,
   home_country,
-  sk_birth_date, 
-  sk_join_date,
+  sk_birth_date as fk_birth_date, 
+  sk_join_date as fk_join_date,
   s.dbt_valid_from,
   COALESCE(s.dbt_valid_to, '9999-12-31'::DATE) AS valid_to, 
   s.dbt_valid_to IS NULL AS is_current
